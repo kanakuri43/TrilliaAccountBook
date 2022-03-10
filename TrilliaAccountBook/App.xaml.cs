@@ -17,7 +17,9 @@ namespace TrilliaAccountBook
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            containerRegistry.RegisterForNavigation<JournalEntry>();
+            containerRegistry.RegisterForNavigation<Menu>();
+            containerRegistry.RegisterForNavigation<Login>();
         }
     }
 }
