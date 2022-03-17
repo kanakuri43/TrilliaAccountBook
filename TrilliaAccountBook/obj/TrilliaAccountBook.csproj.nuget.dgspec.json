@@ -1,0 +1,66 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\User3077\\source\\repos\\TrilliaAccountBook\\TrilliaAccountBook\\TrilliaAccountBook.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\User3077\\source\\repos\\TrilliaAccountBook\\TrilliaAccountBook\\TrilliaAccountBook.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\User3077\\source\\repos\\TrilliaAccountBook\\TrilliaAccountBook\\TrilliaAccountBook.csproj",
+        "projectName": "TrilliaAccountBook",
+        "projectPath": "C:\\Users\\User3077\\source\\repos\\TrilliaAccountBook\\TrilliaAccountBook\\TrilliaAccountBook.csproj",
+        "packagesPath": "C:\\Users\\User3077\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User3077\\source\\repos\\TrilliaAccountBook\\TrilliaAccountBook\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\User3077\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "http://nuget.c1.grapecity.com/nuget": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {
+          "dependencies": {
+            "MahApps.Metro": {
+              "target": "Package",
+              "version": "[2.4.9, )"
+            },
+            "Prism.Unity": {
+              "target": "Package",
+              "version": "[8.0.0.1909, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}
