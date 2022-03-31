@@ -21,6 +21,7 @@ namespace TrilliaAccountBook.ViewModels
         private int _creditAccountCode;
         private int _price;
         private string _messageString;
+        private Accounts _account;
 
         private readonly IRegionManager _regionManager;
 
@@ -30,13 +31,36 @@ namespace TrilliaAccountBook.ViewModels
 
             _regionManager = regionManager;
             SlipDate = DateTime.Today;
-            EntryCommand = new DelegateCommand(EntryCommandExecute);
+            CommitCommand = new DelegateCommand(CommitCommandExecute);
             CancelCommand = new DelegateCommand(CancelCommandExecute);
 
             _dc = new DatabaseController();
         }
-        public DelegateCommand EntryCommand { get; }
+        public DelegateCommand CommitCommand { get; }
         public DelegateCommand CancelCommand { get; }
+
+
+        public DataTable Accounts
+        {
+            get
+            {
+                DatabaseController dc = new DatabaseController();
+                string sql = "SELECT "
+                           + " account_code "
+                           + " , account_name "
+                           + "FROM "
+                           + "   accounts "
+                           + "WHERE "
+                           + "   state = 0 "
+                           + "ORDER BY "
+                           + "  account_code  "
+                           ;
+                dc.SQL = sql;
+
+                return dc.ReadAsDataTable();
+            }
+        }
+
         public int SlipNo
         {
             get { return _slipNo; }
@@ -72,22 +96,26 @@ namespace TrilliaAccountBook.ViewModels
             get { return _messageString; }
             set { SetProperty(ref _messageString, value); }
         }
+        public Accounts Account
+        {
+            get { return _account; }
+            set { SetProperty(ref _account, value); }
+        }
 
-        private void EntryCommandExecute()
+        private void CommitCommandExecute()
         {
 
             var cf = new CommonFunctions();
 
-            using (SqlCommand command = new SqlCommand("usp_insert_account_journal", _dc.Connection))
+            using (SqlCommand command = new SqlCommand("usp_register_account_journal", _dc.Connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@arg_slip_no", SlipNo);
                 command.Parameters.AddWithValue("@arg_slip_date", SlipDate);
                 command.Parameters.AddWithValue("@arg_description", Description);
                 command.Parameters.AddWithValue("@arg_debit_account_code", DebitAccountCode);
-                command.Parameters.AddWithValue("@arg_debit_price", Price);
                 command.Parameters.AddWithValue("@arg_credit_account_code", CreditAccountCode);
-                command.Parameters.AddWithValue("@arg_credit_price", Price);
+                command.Parameters.AddWithValue("@arg_price", Price);
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     if (reader.HasRows)

@@ -34,7 +34,7 @@
                     Orientation="Horizontal">
             <TextBlock Text="Description" 
                        Width="100"/>
-            <TextBox />
+            <TextBox Text="{Binding Description}"/>
         </StackPanel>
         <StackPanel Grid.Row="3"
                     Margin="0,0,0,2"
@@ -42,8 +42,10 @@
             <TextBlock Text="Debit" 
                        Width="100"/>
             <ComboBox Width="200"
-                      DisplayMemberPath="社員名" 
-                      SelectedValuePath="社員コード"/>
+                      SelectedValuePath="account_code"
+                      DisplayMemberPath="account_name"
+                      ItemsSource="{Binding Accounts}" 
+                      SelectedValue="{Binding DebitAccountCode, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
         <StackPanel Grid.Row="4"
                     Margin="0,0,0,2"
@@ -51,15 +53,17 @@
             <TextBlock Text="Credit" 
                        Width="100"/>
             <ComboBox Width="200"
-                      DisplayMemberPath="社員名" 
-                      SelectedValuePath="社員コード"/>
+                      SelectedValuePath="account_code"
+                      DisplayMemberPath="account_name"
+                      ItemsSource="{Binding Accounts}" 
+                      SelectedValue="{Binding CreditAccountCode, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
         <StackPanel Grid.Row="5"
                     Margin="0,0,0,2"
                     Orientation="Horizontal">
             <TextBlock Text="Price" 
                        Width="100"/>
-            <TextBox />
+            <TextBox Text="{Binding Price}"/>
         </StackPanel>
         <StackPanel Grid.Row="6"
                     Margin="0,0,0,2"
@@ -67,7 +71,7 @@
                     HorizontalAlignment="Right">
             <Button Content="OK" 
                     Width="80"                    
-                    Command="{Binding EntryCommand}"/>
+                    Command="{Binding CommitCommand}"/>
 
             <Button Content="Cancel1" 
                     IsCancel="True"

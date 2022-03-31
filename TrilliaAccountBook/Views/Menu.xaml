@@ -8,7 +8,7 @@
         <StackPanel Grid.Column="2" 
                     Grid.Row="1"
                     Width="200">
-            <Button Content="Journal Entry" Height="50" FontSize="16" Margin="4" Command="{Binding JournalEntryCommand}" />
+            <Button Content="Journal Register" Height="50" FontSize="16" Margin="4" Command="{Binding JournalEntryCommand}" />
             <Button Content="" Height="50" FontSize="16" Margin="4" Command="{Binding SalesEntryCommand}" />
             <Button Content="" Height="50" FontSize="16" Margin="4" Command="{Binding PaymentEntryCommand}"/>
             <Button Content="" Height="50" FontSize="16" Margin="4" Command="{Binding InvoiceCommand}"/>
