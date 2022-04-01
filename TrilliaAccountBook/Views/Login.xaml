@@ -20,13 +20,12 @@
             </Border.Background>
         </Border>
 
-        <TextBlock Text="TRILLIA"
+        <TextBlock Text="ACCOUNT BOOK"
                        VerticalAlignment="Center"
-                       FontWeight="Bold" 
-                       FontFamily="Century Gothic"
-                       FontSize="32"
+                       FontWeight="Bold"
+                       FontSize="24"
                        Foreground="White"
-                       HorizontalAlignment="Center"/>
+                       HorizontalAlignment="Center" FontFamily="Arial Black"/>
         <StackPanel Grid.Row="1" Width="235"
                         HorizontalAlignment="Center"
                         FocusManager.FocusedElement="{Binding ElementName=userIdTextBox}">

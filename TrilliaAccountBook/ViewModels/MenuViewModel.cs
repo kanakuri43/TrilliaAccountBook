@@ -14,12 +14,12 @@ namespace TrilliaAccountBook.ViewModels
         public MenuViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
-            JournalEntryCommand = new DelegateCommand(JournalEntryCommandExecute);
+            RegisterJournalCommand = new DelegateCommand(RegisterJournalCommandExecute);
 
         }
-        public DelegateCommand JournalEntryCommand { get; }
+        public DelegateCommand RegisterJournalCommand { get; }
 
-        private void JournalEntryCommandExecute()
+        private void RegisterJournalCommandExecute()
         {
             // Menu表示
             var p = new NavigationParameters();

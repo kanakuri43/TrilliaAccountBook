@@ -4,7 +4,7 @@
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True"
              >
-    <Grid Width="400"
+    <Grid Width="300"
           Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -15,74 +15,118 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0"
+        <StackPanel Grid.Row="1"
                     Margin="0,0,0,2"
                     Orientation="Horizontal">
             <TextBlock Text="Slip No"
                        Width="100"/>
             <TextBox Text="{Binding SlipNo, StringFormat={}{0:#}}" 
+                     Width="120"
                      x:Name="SlipNoTextBox"/>
         </StackPanel>
-        <StackPanel Grid.Row="1"
+        <StackPanel Grid.Row="2"
                     Margin="0,0,0,2"
                     Orientation="Horizontal">
             <TextBlock Text="Slip Date" 
                        Width="100"/>
             <DatePicker SelectedDate="{Binding SlipDate}"
+                        Width="120"
                         x:Name="SlipDatePicker"/>
-        </StackPanel>
-        <StackPanel Grid.Row="2"
-                    Margin="0,0,0,2"
-                    Orientation="Horizontal">
-            <TextBlock Text="Description" 
-                       Width="100"/>
-            <TextBox Text="{Binding Description}"/>
         </StackPanel>
         <StackPanel Grid.Row="3"
                     Margin="0,0,0,2"
                     Orientation="Horizontal">
+            <TextBlock Text="Description" 
+                       Width="100"/>
+            <TextBox Text="{Binding Description}"
+                     Width="120"/>
+        </StackPanel>
+        <StackPanel Grid.Row="4"
+                    Margin="0,0,0,2"
+                    Orientation="Horizontal">
             <TextBlock Text="Debit" 
                        Width="100"/>
-            <ComboBox Width="200"
+            <ComboBox Width="120"
                       SelectedValuePath="AccountCode"
                       DisplayMemberPath="AccountName"
                       ItemsSource="{Binding Accounts}" 
                       SelectedValue="{Binding DebitAccountCode}"/>
         </StackPanel>
-        <StackPanel Grid.Row="4"
+        <StackPanel Grid.Row="5"
                     Margin="0,0,0,2"
                     Orientation="Horizontal">
             <TextBlock Text="Credit" 
                        Width="100"/>
-            <ComboBox Width="200"
+            <ComboBox Width="120"
                       SelectedValuePath="AccountCode"
                       DisplayMemberPath="AccountName"
                       ItemsSource="{Binding Accounts}" 
                       SelectedValue="{Binding CreditAccountCode}"/>
         </StackPanel>
-        <StackPanel Grid.Row="5"
+        <StackPanel Grid.Row="6"
                     Margin="0,0,0,2"
                     Orientation="Horizontal">
             <TextBlock Text="Price" 
                        Width="100"/>
-            <TextBox Text="{Binding Price, StringFormat={}{0:N0}}"/>
+            <TextBox Text="{Binding Price, StringFormat={}{0:N0}}"
+                     Width="120"/>
         </StackPanel>
-        <StackPanel Grid.Row="6"
+        <StackPanel Grid.Row="8"
                     Margin="0,0,0,2"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right">
-            <Button Content="OK" 
-                    Width="80"                    
-                    Command="{Binding OKCommand}"/>
+            <Button Width="80"                    
+                    Command="{Binding OKCommand}">
+                <Rectangle Width="24" Height="24">
+                    <Rectangle.Fill>
+                        <DrawingBrush>
+                            <DrawingBrush.Drawing>
+                                <DrawingGroup>
+                                    <DrawingGroup.Children>
+                                        <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                        <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M6.0003,9.1717L2.7073,5.8787 0.000300000000000189,8.5857 0.000300000000000189,8.8277 6.0003,14.8277 16.0003,4.8287 16.0003,4.5857 13.2933,1.8787z" />
+                                        <GeometryDrawing Brush="#FF388A34" Geometry="F1M14.707,4.707L6,13.414 1.293,8.707 2.707,7.293 6,10.586 13.293,3.293z" />
+                                    </DrawingGroup.Children>
+                                </DrawingGroup>
+                            </DrawingBrush.Drawing>
+                        </DrawingBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
 
+            </Button>
+
+            <Button IsCancel="True"
+                    Width="80"
+                    VerticalContentAlignment="Center"
+                    Command="{Binding DeleteCommand}">
+                <Rectangle Width="24" Height="24">
+                    <Rectangle.Fill>
+                        <DrawingBrush>
+                            <DrawingBrush.Drawing>
+                                <DrawingGroup>
+                                    <DrawingGroup.Children>
+                                        <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                        <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M4,16C2.897,16,2,15.103,2,14L2,5 1,5 1,2 4,2C4,0.897,4.897,0,6,0L9,0C10.103,0,11,0.897,11,2L14,2 14,5 13,5 13,14C13,15.103,12.103,16,11,16z" />
+                                        <GeometryDrawing Brush="#FFEFEFF0" Geometry="F1M10,12L9,12 9,6 10,6z M8,12L7,12 7,6 8,6z M6,12L5,12 5,6 6,6z M4,14L11,14 11,4 4,4z" />
+                                        <GeometryDrawing Brush="#FF424242" Geometry="F1M11,4L4,4 4,14 11,14z M6,3L9,3 9,2 6,2z M13,3L13,4 12,4 12,14C12,14.552,11.552,15,11,15L4,15C3.448,15,3,14.552,3,14L3,4 2,4 2,3 5,3 5,2C5,1.448,5.448,1,6,1L9,1C9.552,1,10,1.448,10,2L10,3z M10,6L9,6 9,12 10,12z M8,6L7,6 7,12 8,12z M6,12L5,12 5,6 6,6z" />
+                                    </DrawingGroup.Children>
+                                </DrawingGroup>
+                            </DrawingBrush.Drawing>
+                        </DrawingBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+
+
+            </Button>
             <Button Content="Cancel" 
                     IsCancel="True"
                     Width="80"
                     Command="{Binding CancelCommand}"/>
         </StackPanel>
-        <TextBlock Grid.Row="8"
+        <TextBlock Grid.Row="9"
                    Margin="0,0,0,2"
                    Text="{Binding MessageString}"/>
 
