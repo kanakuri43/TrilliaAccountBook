@@ -45,26 +45,6 @@ namespace TrilliaAccountBook.ViewModels
         public DelegateCommand CancelCommand { get; }
 
 
-        //public DataTable Accounts
-        //{
-        //    get
-        //    {
-        //        DatabaseController dc = new DatabaseController();
-        //        string sql = "SELECT "
-        //                   + " account_code "
-        //                   + " , account_name "
-        //                   + "FROM "
-        //                   + "   accounts "
-        //                   + "WHERE "
-        //                   + "   state = 0 "
-        //                   + "ORDER BY "
-        //                   + "  account_code  "
-        //                   ;
-        //        dc.SQL = sql;
-
-        //        return dc.ReadAsDataTable();
-        //    }
-        //}
 
         public int SlipNo
         {

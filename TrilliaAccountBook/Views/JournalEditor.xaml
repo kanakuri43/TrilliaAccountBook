@@ -46,7 +46,7 @@
                       SelectedValuePath="AccountCode"
                       DisplayMemberPath="AccountName"
                       ItemsSource="{Binding Accounts}" 
-                      SelectedValue="{Binding DebitAccountCode, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                      SelectedValue="{Binding DebitAccountCode}"/>
         </StackPanel>
         <StackPanel Grid.Row="4"
                     Margin="0,0,0,2"
@@ -57,7 +57,7 @@
                       SelectedValuePath="AccountCode"
                       DisplayMemberPath="AccountName"
                       ItemsSource="{Binding Accounts}" 
-                      SelectedValue="{Binding CreditAccountCode, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                      SelectedValue="{Binding CreditAccountCode}"/>
         </StackPanel>
         <StackPanel Grid.Row="5"
                     Margin="0,0,0,2"
