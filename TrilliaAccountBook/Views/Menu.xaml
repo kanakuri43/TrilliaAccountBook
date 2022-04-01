@@ -4,7 +4,7 @@
              xmlns:prism="http://prismlibrary.com/"             
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <Grid>
+    <Grid Background="White">
         <StackPanel Grid.Column="2" 
                     Grid.Row="1"
                     Width="200">

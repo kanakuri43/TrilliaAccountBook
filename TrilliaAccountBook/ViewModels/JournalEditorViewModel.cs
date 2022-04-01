@@ -22,7 +22,7 @@ namespace TrilliaAccountBook.ViewModels
         private int _creditAccountCode;
         private int _price;
         private string _messageString;
-        private ObservableCollection<AccountsViewModel> _accounts = new ObservableCollection<AccountsViewModel>();
+        private ObservableCollection<ComboBoxViewModel> _accounts = new ObservableCollection<ComboBoxViewModel>();
 
         private readonly IRegionManager _regionManager;
 
@@ -32,16 +32,31 @@ namespace TrilliaAccountBook.ViewModels
 
             _regionManager = regionManager;
             SlipDate = DateTime.Today;
-            CommitCommand = new DelegateCommand(CommitCommandExecute);
+            OKCommand = new DelegateCommand(OKCommandExecute);
             CancelCommand = new DelegateCommand(CancelCommandExecute);
 
             _dc = new DatabaseController();
+            _dc.SQL = "SELECT "
+                    + "  account_code "
+                    + "  , account_name "
+                    + " FROM "
+                    + "   accounts "
+                    + " WHERE "
+                    + "   state = 0 "
+                    + " ORDER BY "
+                    + "   account_code ";
+            SqlDataReader dr = _dc.ReadAsDataReader();
+            if (dr != null)
+            {
+                while (dr.Read())
+                {
+                    Accounts.Add(new ComboBoxViewModel(int.Parse(dr["account_code"].ToString()), dr["account_name"].ToString()));
+                }
 
-            Accounts.Add(new AccountsViewModel(1111, "現金"));
-            Accounts.Add(new AccountsViewModel(1112, "預金"));
+            }
 
         }
-        public DelegateCommand CommitCommand { get; }
+        public DelegateCommand OKCommand { get; }
         public DelegateCommand CancelCommand { get; }
 
 
@@ -81,16 +96,16 @@ namespace TrilliaAccountBook.ViewModels
             get { return _messageString; }
             set { SetProperty(ref _messageString, value); }
         }
-        public ObservableCollection<AccountsViewModel> Accounts
+        public ObservableCollection<ComboBoxViewModel> Accounts
         {
             get { return _accounts; }
             set { SetProperty(ref _accounts, value); }
         }
 
-        private void CommitCommandExecute()
+        private void OKCommandExecute()
         {
 
-            var cf = new CommonFunctions();
+            //var cf = new CommonFunctions();
 
             using (SqlCommand command = new SqlCommand("usp_register_account_journal", _dc.Connection))
             {

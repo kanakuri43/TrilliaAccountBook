@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace TrilliaAccountBook.ViewModels
 {
-    public sealed class AccountsViewModel
+    public sealed class ComboBoxViewModel
     {
-        public AccountsViewModel(int Code, String Name)
+        public ComboBoxViewModel(int Code, String Name)
         {
             AccountCode = Code;
             AccountName = Name;
