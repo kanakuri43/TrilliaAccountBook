@@ -8,6 +8,7 @@ using TrilliaAccountBook.Views;
 using TrilliaAccountBookf.Models;
 using System.Data.SqlClient;
 using System.Data;
+using System.Collections.ObjectModel;
 
 namespace TrilliaAccountBook.ViewModels
 {
@@ -21,7 +22,7 @@ namespace TrilliaAccountBook.ViewModels
         private int _creditAccountCode;
         private int _price;
         private string _messageString;
-        private Accounts _account;
+        private ObservableCollection<AccountsViewModel> _accounts = new ObservableCollection<AccountsViewModel>();
 
         private readonly IRegionManager _regionManager;
 
@@ -35,31 +36,35 @@ namespace TrilliaAccountBook.ViewModels
             CancelCommand = new DelegateCommand(CancelCommandExecute);
 
             _dc = new DatabaseController();
+
+            Accounts.Add(new AccountsViewModel(1111, "現金"));
+            Accounts.Add(new AccountsViewModel(1112, "預金"));
+
         }
         public DelegateCommand CommitCommand { get; }
         public DelegateCommand CancelCommand { get; }
 
 
-        public DataTable Accounts
-        {
-            get
-            {
-                DatabaseController dc = new DatabaseController();
-                string sql = "SELECT "
-                           + " account_code "
-                           + " , account_name "
-                           + "FROM "
-                           + "   accounts "
-                           + "WHERE "
-                           + "   state = 0 "
-                           + "ORDER BY "
-                           + "  account_code  "
-                           ;
-                dc.SQL = sql;
+        //public DataTable Accounts
+        //{
+        //    get
+        //    {
+        //        DatabaseController dc = new DatabaseController();
+        //        string sql = "SELECT "
+        //                   + " account_code "
+        //                   + " , account_name "
+        //                   + "FROM "
+        //                   + "   accounts "
+        //                   + "WHERE "
+        //                   + "   state = 0 "
+        //                   + "ORDER BY "
+        //                   + "  account_code  "
+        //                   ;
+        //        dc.SQL = sql;
 
-                return dc.ReadAsDataTable();
-            }
-        }
+        //        return dc.ReadAsDataTable();
+        //    }
+        //}
 
         public int SlipNo
         {
@@ -96,10 +101,10 @@ namespace TrilliaAccountBook.ViewModels
             get { return _messageString; }
             set { SetProperty(ref _messageString, value); }
         }
-        public Accounts Account
+        public ObservableCollection<AccountsViewModel> Accounts
         {
-            get { return _account; }
-            set { SetProperty(ref _account, value); }
+            get { return _accounts; }
+            set { SetProperty(ref _accounts, value); }
         }
 
         private void CommitCommandExecute()

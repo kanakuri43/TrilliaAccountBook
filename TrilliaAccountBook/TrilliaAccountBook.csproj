@@ -58,7 +58,7 @@
     </ApplicationDefinition>
     <Compile Include="Models\CommonFunctions.cs" />
     <Compile Include="Models\DatabaseController.cs" />
-    <Compile Include="ViewModels\Accounts.cs" />
+    <Compile Include="ViewModels\AccountsViewModel.cs" />
     <Compile Include="ViewModels\JournalEditorViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="Views\JournalEditor.xaml.cs">
