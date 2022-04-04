@@ -15,7 +15,6 @@ namespace TrilliaAccountBook.ViewModels
 {
     public class JournalEditorViewModel : BindableBase
     {
-        //private DatabaseController _dc;
         private int _slipNo;
         private DateTime _slipDate;
         private string _description;
@@ -118,30 +117,79 @@ namespace TrilliaAccountBook.ViewModels
         {
             var dc = new DatabaseController();
 
-            using (SqlCommand command = new SqlCommand("usp_register_account_journal", dc.Connection))
+            if (SlipNo == 0)
             {
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@arg_slip_no", SlipNo);
-                command.Parameters.AddWithValue("@arg_slip_date", SlipDate);
-                command.Parameters.AddWithValue("@arg_description", Description);
-                command.Parameters.AddWithValue("@arg_debit_account_code", DebitAccountCode);
-                command.Parameters.AddWithValue("@arg_credit_account_code", CreditAccountCode);
-                command.Parameters.AddWithValue("@arg_price", Price);
-                using (SqlDataReader reader = command.ExecuteReader())
+                // 新規登録
+
+                using (SqlCommand command = new SqlCommand("usp_register_account_journal", dc.Connection))
                 {
-                    if (reader.HasRows)
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@arg_slip_no", SlipNo);
+                    command.Parameters.AddWithValue("@arg_slip_date", SlipDate);
+                    command.Parameters.AddWithValue("@arg_description", Description);
+                    command.Parameters.AddWithValue("@arg_debit_account_code", DebitAccountCode);
+                    command.Parameters.AddWithValue("@arg_credit_account_code", CreditAccountCode);
+                    command.Parameters.AddWithValue("@arg_price", Price);
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        reader.Read();
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
 
-                        ResultMessage = @"伝票番号：" + reader["arg_slip_no"].ToString() + @"で登録しました。";
-                    }
-                    else
-                    {
-                        ResultMessage = @"エラー";
-
+                            ResultMessage = @"伝票番号：" + reader["arg_slip_no"].ToString() + @"で登録しました。";
+                        }
+                        else
+                        {
+                            ResultMessage = @"エラー";
+                        }
                     }
                 }
             }
+            else
+            {
+                // 更新はdelete insert
+
+                using (SqlCommand command = new SqlCommand("usp_invalidate_account_journal", dc.Connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@arg_slip_no", SlipNo);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+
+                        }
+                        else
+                        {
+                            ResultMessage = @"エラー";
+                        }
+                    }
+                }
+
+                using (SqlCommand command = new SqlCommand("usp_register_account_journal", dc.Connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@arg_slip_no", SlipNo);
+                    command.Parameters.AddWithValue("@arg_slip_date", SlipDate);
+                    command.Parameters.AddWithValue("@arg_description", Description);
+                    command.Parameters.AddWithValue("@arg_debit_account_code", DebitAccountCode);
+                    command.Parameters.AddWithValue("@arg_credit_account_code", CreditAccountCode);
+                    command.Parameters.AddWithValue("@arg_price", Price);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
+                            ResultMessage = @"伝票番号：" + reader["arg_slip_no"].ToString() + @"を更新しました。";
+                        }
+                        else
+                        {
+                            ResultMessage = @"エラー";
+                        }
+                    }
+                }
+            }
+
 
         }
         private void DeleteCommandExecute()
