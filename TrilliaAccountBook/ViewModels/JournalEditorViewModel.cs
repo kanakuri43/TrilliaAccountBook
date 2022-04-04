@@ -9,19 +9,21 @@ using TrilliaAccountBookf.Models;
 using System.Data.SqlClient;
 using System.Data;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 
 namespace TrilliaAccountBook.ViewModels
 {
     public class JournalEditorViewModel : BindableBase
     {
-        private DatabaseController _dc;
+        //private DatabaseController _dc;
         private int _slipNo;
         private DateTime _slipDate;
         private string _description;
         private int _debitAccountCode;
         private int _creditAccountCode;
         private int _price;
-        private string _messageString;
+        private string _resultMessage;
+        private string _slipNoMessageString;
         private ObservableCollection<ComboBoxViewModel> _accounts = new ObservableCollection<ComboBoxViewModel>();
 
         private readonly IRegionManager _regionManager;
@@ -32,11 +34,14 @@ namespace TrilliaAccountBook.ViewModels
 
             _regionManager = regionManager;
             SlipDate = DateTime.Today;
-            OKCommand = new DelegateCommand(OKCommandExecute);
-            CancelCommand = new DelegateCommand(CancelCommandExecute);
 
-            _dc = new DatabaseController();
-            _dc.SQL = "SELECT "
+            OKCommand = new DelegateCommand(OKCommandExecute);
+            DeleteCommand = new DelegateCommand(DeleteCommandExecute);
+            CancelCommand = new DelegateCommand(CancelCommandExecute);
+            SlipSearchCommand = new DelegateCommand<TextBox>(SlipSearchCommandExecute);
+
+            dc = new DatabaseController();
+            dc.SQL = "SELECT "
                     + "  account_code "
                     + "  , account_name "
                     + " FROM "
@@ -45,7 +50,7 @@ namespace TrilliaAccountBook.ViewModels
                     + "   state = 0 "
                     + " ORDER BY "
                     + "   account_code ";
-            SqlDataReader dr = _dc.ReadAsDataReader();
+            SqlDataReader dr = dc.ReadAsDataReader();
             if (dr != null)
             {
                 while (dr.Read())
@@ -57,7 +62,9 @@ namespace TrilliaAccountBook.ViewModels
 
         }
         public DelegateCommand OKCommand { get; }
+        public DelegateCommand DeleteCommand { get; }
         public DelegateCommand CancelCommand { get; }
+        public DelegateCommand<TextBox> SlipSearchCommand { get; }
 
 
 
@@ -91,10 +98,15 @@ namespace TrilliaAccountBook.ViewModels
             get { return _price; }
             set { SetProperty(ref _price, value); }
         }
-        public string MessageString
+        public string ResultMessage
         {
-            get { return _messageString; }
-            set { SetProperty(ref _messageString, value); }
+            get { return _resultMessage; }
+            set { SetProperty(ref _resultMessage, value); }
+        }
+        public string SlipNoMessage
+        {
+            get { return _slipNoMessageString; }
+            set { SetProperty(ref _slipNoMessageString, value); }
         }
         public ObservableCollection<ComboBoxViewModel> Accounts
         {
@@ -104,10 +116,9 @@ namespace TrilliaAccountBook.ViewModels
 
         private void OKCommandExecute()
         {
+            var dc = new DatabaseController();
 
-            //var cf = new CommonFunctions();
-
-            using (SqlCommand command = new SqlCommand("usp_register_account_journal", _dc.Connection))
+            using (SqlCommand command = new SqlCommand("usp_register_account_journal", dc.Connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@arg_slip_no", SlipNo);
@@ -122,11 +133,36 @@ namespace TrilliaAccountBook.ViewModels
                     {
                         reader.Read();
 
-                        MessageString = @"伝票番号：" + reader["arg_slip_no"].ToString() + @"で登録しました。";
+                        ResultMessage = @"伝票番号：" + reader["arg_slip_no"].ToString() + @"で登録しました。";
                     }
                     else
                     {
-                        MessageString = @"エラー";
+                        ResultMessage = @"エラー";
+
+                    }
+                }
+            }
+
+        }
+        private void DeleteCommandExecute()
+        {
+            var dc = new DatabaseController();
+
+            using (SqlCommand command = new SqlCommand("usp_invalidate_account_journal", dc.Connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@arg_slip_no", SlipNo);
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+
+                        ResultMessage = @"伝票番号：" + reader["arg_slip_no"].ToString() + @"を削除しました。";
+                    }
+                    else
+                    {
+                        ResultMessage = @"エラー";
 
                     }
                 }
@@ -137,8 +173,54 @@ namespace TrilliaAccountBook.ViewModels
         {
             // Menu表示
             var p = new NavigationParameters();
-            _regionManager.RequestNavigate("ContentRegion", nameof(Menu), p);
+            _regionManager.RequestNavigate("ContentRegion", nameof(TrilliaAccountBook.Views.Menu), p);
 
         }
+        private void SlipSearchCommandExecute(TextBox slipNoTextBox)
+        {
+            if (slipNoTextBox.Text == "")
+            {
+
+            }
+            else
+            {
+                CallSlip(int.Parse(slipNoTextBox.Text));
+            }
+        }
+        private void CallSlip(int slipNo)
+        {
+
+            var dc = new DatabaseController();
+            dc.SQL = "SELECT "
+                    + "  * "
+                    + "FROM "
+                    + "  uv_account_journal "
+                    + "WHERE "
+                    + "  slip_no = " + slipNo
+                    ;
+            SqlDataReader dr = dc.ReadAsDataReader();
+            if (dr != null)
+            {
+                SlipNoMessage = "";
+
+                while (dr.Read())
+                {
+                    SlipNo = (int)dr["slip_no"];
+                    SlipDate = (DateTime)dr["slip_date"];
+                    Description = dr["description"].ToString();
+                    DebitAccountCode = (int)dr["debit_account_code"];
+                    CreditAccountCode = (int)dr["credit_account_code"];
+                    Price = (int)dr["debit_price"];
+                }
+            }
+            else
+            {
+                SlipNoMessage = "Slip No. not found.";
+            }
+
+
+
+        }
+
     }
 }
