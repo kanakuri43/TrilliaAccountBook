@@ -57,8 +57,8 @@
             <TextBlock Text="Debit" 
                        Width="100"/>
             <ComboBox Width="120"
-                      SelectedValuePath="AccountCode"
-                      DisplayMemberPath="AccountName"
+                      SelectedValuePath="SelectedValue"
+                      DisplayMemberPath="DisplayMember"
                       ItemsSource="{Binding Accounts}" 
                       SelectedValue="{Binding DebitAccountCode}"/>
         </StackPanel>
@@ -68,8 +68,8 @@
             <TextBlock Text="Credit" 
                        Width="100"/>
             <ComboBox Width="120"
-                      SelectedValuePath="AccountCode"
-                      DisplayMemberPath="AccountName"
+                      SelectedValuePath="SelectedValue"
+                      DisplayMemberPath="DisplayMember"
                       ItemsSource="{Binding Accounts}" 
                       SelectedValue="{Binding CreditAccountCode}"/>
         </StackPanel>

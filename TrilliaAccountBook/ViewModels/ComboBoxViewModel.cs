@@ -10,12 +10,12 @@ namespace TrilliaAccountBook.ViewModels
     {
         public ComboBoxViewModel(int Code, String Name)
         {
-            AccountCode = Code;
-            AccountName = Name;
+            SelectedValue = Code;
+            DisplayMember = Name;
 
         }
 
-        public int AccountCode { get; }
-        public string AccountName { get; }
+        public int SelectedValue { get; }
+        public string DisplayMember { get; }
     }
 }
