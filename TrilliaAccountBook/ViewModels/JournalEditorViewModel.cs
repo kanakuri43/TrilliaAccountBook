@@ -15,6 +15,8 @@ namespace TrilliaAccountBook.ViewModels
 {
     public class JournalEditorViewModel : BindableBase
     {
+        private ObservableCollection<ComboBoxViewModel> _extractYearList = new ObservableCollection<ComboBoxViewModel>();
+        private int _extractYear;
         private int _slipNo;
         private DateTime _slipDate;
         private string _description;
@@ -56,8 +58,15 @@ namespace TrilliaAccountBook.ViewModels
                 {
                     Accounts.Add(new ComboBoxViewModel(int.Parse(dr["account_code"].ToString()), dr["account_name"].ToString()));
                 }
-
             }
+
+            int CurrentYear = DateTime.Today.Year;
+            for (int i = -5; i < 6; i++)
+            {
+                ExtractYearList.Add(new ComboBoxViewModel(CurrentYear + i, (CurrentYear + i).ToString()));
+            }
+            ExtractYear = CurrentYear;
+
 
         }
         public DelegateCommand OKCommand { get; }
@@ -67,6 +76,16 @@ namespace TrilliaAccountBook.ViewModels
 
 
 
+        public ObservableCollection<ComboBoxViewModel> ExtractYearList
+        {
+            get { return _extractYearList; }
+            set { SetProperty(ref _extractYearList, value); }
+        }
+        public int ExtractYear
+        {
+            get { return _extractYear; }
+            set { SetProperty(ref _extractYear, value); }
+        }
         public int SlipNo
         {
             get { return _slipNo; }
