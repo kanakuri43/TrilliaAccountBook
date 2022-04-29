@@ -34,7 +34,6 @@ namespace TrilliaAccountBook.ViewModels
             var dc = new DatabaseController();
 
             _regionManager = regionManager;
-            SlipDate = DateTime.Today;
 
             OKCommand = new DelegateCommand(OKCommandExecute);
             DeleteCommand = new DelegateCommand(DeleteCommandExecute);
@@ -67,6 +66,7 @@ namespace TrilliaAccountBook.ViewModels
             }
             ExtractYear = CurrentYear;
 
+            InitEditor();
 
         }
         public DelegateCommand OKCommand { get; }
@@ -209,6 +209,8 @@ namespace TrilliaAccountBook.ViewModels
                 }
             }
 
+            InitEditor();
+
 
         }
         private void DeleteCommandExecute()
@@ -234,6 +236,7 @@ namespace TrilliaAccountBook.ViewModels
                     }
                 }
             }
+            InitEditor();
 
         }
         private void CancelCommandExecute()
@@ -289,5 +292,15 @@ namespace TrilliaAccountBook.ViewModels
 
         }
 
+        private void InitEditor()
+        {
+            SlipNo = 0;
+            SlipDate = DateTime.Today;
+            Description = "";
+            DebitAccountCode = 0;
+            CreditAccountCode = 0;
+            Price = 0;
+
+        }
     }
 }
