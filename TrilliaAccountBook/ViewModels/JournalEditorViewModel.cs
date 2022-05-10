@@ -2,14 +2,11 @@
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using TrilliaAccountBook.Views;
-using TrilliaAccountBookf.Models;
-using System.Data.SqlClient;
-using System.Data;
 using System.Collections.ObjectModel;
+using System.Data;
+using System.Data.SqlClient;
 using System.Windows.Controls;
+using TrilliaAccountBook.Views;
 
 namespace TrilliaAccountBook.ViewModels
 {
@@ -35,7 +32,7 @@ namespace TrilliaAccountBook.ViewModels
 
             _regionManager = regionManager;
 
-            OKCommand = new DelegateCommand(OKCommandExecute);
+            RegisterCommand = new DelegateCommand(RegisterCommandExecute);
             DeleteCommand = new DelegateCommand(DeleteCommandExecute);
             CancelCommand = new DelegateCommand(CancelCommandExecute);
             SlipSearchCommand = new DelegateCommand<TextBox>(SlipSearchCommandExecute);
@@ -69,7 +66,7 @@ namespace TrilliaAccountBook.ViewModels
             InitEditor();
 
         }
-        public DelegateCommand OKCommand { get; }
+        public DelegateCommand RegisterCommand { get; }
         public DelegateCommand DeleteCommand { get; }
         public DelegateCommand CancelCommand { get; }
         public DelegateCommand<TextBox> SlipSearchCommand { get; }
@@ -132,7 +129,7 @@ namespace TrilliaAccountBook.ViewModels
             set { SetProperty(ref _accounts, value); }
         }
 
-        private void OKCommandExecute()
+        private void RegisterCommandExecute()
         {
             var dc = new DatabaseController();
 
@@ -149,19 +146,13 @@ namespace TrilliaAccountBook.ViewModels
                     command.Parameters.AddWithValue("@arg_debit_account_code", DebitAccountCode);
                     command.Parameters.AddWithValue("@arg_credit_account_code", CreditAccountCode);
                     command.Parameters.AddWithValue("@arg_price", Price);
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.HasRows)
-                        {
-                            reader.Read();
 
-                            ResultMessage = @"伝票番号：" + reader["arg_slip_no"].ToString() + @"で登録しました。";
-                        }
-                        else
-                        {
-                            ResultMessage = @"エラー";
-                        }
-                    }
+                    command.Parameters.Add("ReturnValue", SqlDbType.Int);
+                    command.Parameters["ReturnValue"].Direction = ParameterDirection.ReturnValue;
+
+                    command.ExecuteNonQuery();
+                    ResultMessage = @"伝票番号：" + command.Parameters["ReturnValue"].Value.ToString() + @"で登録しました。";
+
                 }
             }
             else
@@ -172,17 +163,7 @@ namespace TrilliaAccountBook.ViewModels
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@arg_slip_no", SlipNo);
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.HasRows)
-                        {
-
-                        }
-                        else
-                        {
-                            ResultMessage = @"エラー";
-                        }
-                    }
+                    command.ExecuteNonQuery();
                 }
 
                 using (SqlCommand command = new SqlCommand("usp_register_account_journal", dc.Connection))
@@ -194,18 +175,13 @@ namespace TrilliaAccountBook.ViewModels
                     command.Parameters.AddWithValue("@arg_debit_account_code", DebitAccountCode);
                     command.Parameters.AddWithValue("@arg_credit_account_code", CreditAccountCode);
                     command.Parameters.AddWithValue("@arg_price", Price);
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.HasRows)
-                        {
-                            reader.Read();
-                            ResultMessage = @"伝票番号：" + reader["arg_slip_no"].ToString() + @"を更新しました。";
-                        }
-                        else
-                        {
-                            ResultMessage = @"エラー";
-                        }
-                    }
+
+                    command.Parameters.Add("ReturnValue", SqlDbType.Int);
+                    command.Parameters["ReturnValue"].Direction = ParameterDirection.ReturnValue;
+
+                    command.ExecuteNonQuery();
+                    ResultMessage = @"伝票番号：" + command.Parameters["ReturnValue"].Value.ToString() + @"で登録しました。";
+
                 }
             }
 
@@ -221,20 +197,12 @@ namespace TrilliaAccountBook.ViewModels
             {
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@arg_slip_no", SlipNo);
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    if (reader.HasRows)
-                    {
-                        reader.Read();
 
-                        ResultMessage = @"伝票番号：" + reader["arg_slip_no"].ToString() + @"を削除しました。";
-                    }
-                    else
-                    {
-                        ResultMessage = @"エラー";
+                command.Parameters.Add("ReturnValue", SqlDbType.Int);
+                command.Parameters["ReturnValue"].Direction = ParameterDirection.ReturnValue;
 
-                    }
-                }
+                command.ExecuteNonQuery();
+                ResultMessage = @"伝票番号：" + command.Parameters["ReturnValue"].Value.ToString() + @"を削除しました。";
             }
             InitEditor();
 
@@ -243,7 +211,7 @@ namespace TrilliaAccountBook.ViewModels
         {
             // Menu表示
             var p = new NavigationParameters();
-            _regionManager.RequestNavigate("ContentRegion", nameof(TrilliaAccountBook.Views.Menu), p);
+            _regionManager.RequestNavigate("ContentRegion", nameof(Dashboard), p);
 
         }
         private void SlipSearchCommandExecute(TextBox slipNoTextBox)

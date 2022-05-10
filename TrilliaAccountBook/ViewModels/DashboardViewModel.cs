@@ -1,32 +1,30 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Prism.Regions;
 using TrilliaAccountBook.Views;
 
 namespace TrilliaAccountBook.ViewModels
 {
-    public class LoginViewModel : BindableBase
+    public class DashboardViewModel : BindableBase
     {
         private readonly IRegionManager _regionManager;
-
-        public LoginViewModel(IRegionManager regionManager)
+        public DashboardViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
-            LoginCommand = new DelegateCommand(LoginCommandExecute);
+            RegisterJournalCommand = new DelegateCommand(RegisterJournalCommandExecute);
 
         }
-        public DelegateCommand LoginCommand { get; }
+        public DelegateCommand RegisterJournalCommand { get; }
 
-        private void LoginCommandExecute()
+        private void RegisterJournalCommandExecute()
         {
             // Menu表示
             var p = new NavigationParameters();
-            _regionManager.RequestNavigate("ContentRegion", nameof(Dashboard), p);
+            _regionManager.RequestNavigate("ContentRegion", nameof(JournalEditor), p);
 
         }
-
     }
 }
