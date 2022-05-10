@@ -36,7 +36,7 @@ namespace TrilliaAccountBook.ViewModels
             _regionManager = regionManager;
             SlipDate = DateTime.Today;
 
-            OKCommand = new DelegateCommand(OKCommandExecute);
+            RegisterCommand = new DelegateCommand(RegisterCommandExecute);
             DeleteCommand = new DelegateCommand(DeleteCommandExecute);
             CancelCommand = new DelegateCommand(CancelCommandExecute);
             SlipSearchCommand = new DelegateCommand<TextBox>(SlipSearchCommandExecute);
@@ -69,7 +69,7 @@ namespace TrilliaAccountBook.ViewModels
 
 
         }
-        public DelegateCommand OKCommand { get; }
+        public DelegateCommand RegisterCommand { get; }
         public DelegateCommand DeleteCommand { get; }
         public DelegateCommand CancelCommand { get; }
         public DelegateCommand<TextBox> SlipSearchCommand { get; }
@@ -132,7 +132,7 @@ namespace TrilliaAccountBook.ViewModels
             set { SetProperty(ref _accounts, value); }
         }
 
-        private void OKCommandExecute()
+        private void RegisterCommandExecute()
         {
             var dc = new DatabaseController();
 
@@ -240,7 +240,7 @@ namespace TrilliaAccountBook.ViewModels
         {
             // Menu表示
             var p = new NavigationParameters();
-            _regionManager.RequestNavigate("ContentRegion", nameof(TrilliaAccountBook.Views.Menu), p);
+            _regionManager.RequestNavigate("ContentRegion", nameof(Dashboard), p);
 
         }
         private void SlipSearchCommandExecute(TextBox slipNoTextBox)

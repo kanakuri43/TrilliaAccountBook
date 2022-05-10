@@ -26,7 +26,7 @@
             </DataGrid>
         </Grid>
         <Grid Grid.Column="1" 
-              Width="250"
+              Width="350"
               Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
@@ -69,9 +69,10 @@
                     Margin="0,0,0,2"
                     Orientation="Horizontal">
                 <TextBlock Text="Description" 
-                       Width="100"/>
+                           Width="100"/>
                 <TextBox Text="{Binding Description}"
-                     Width="120"/>
+                         Width="120" 
+                         MaxLength="100"/>
             </StackPanel>
             <StackPanel Grid.Row="4"
                     Margin="0,0,0,2"
@@ -108,7 +109,7 @@
                     Orientation="Horizontal"
                     HorizontalAlignment="Left">
                 <Button Width="80"                    
-                    Command="{Binding OKCommand}">
+                    Command="{Binding RegisterCommand}">
                     <Rectangle Width="24" Height="24">
                         <Rectangle.Fill>
                             <DrawingBrush>
