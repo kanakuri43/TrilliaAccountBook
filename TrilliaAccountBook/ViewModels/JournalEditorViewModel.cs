@@ -20,9 +20,12 @@ namespace TrilliaAccountBook.ViewModels
         private int _debitAccountCode;
         private int _creditAccountCode;
         private int _price;
+        private int _rate;
+        private int _balanceAccountCode;
         private string _resultMessage;
         private string _slipNoMessageString;
         private ObservableCollection<ComboBoxViewModel> _accounts = new ObservableCollection<ComboBoxViewModel>();
+        private int[] _rates = new int[] { 100, 90, 80, 70, 60, 50, 40, 30, 20, 10};
 
         private readonly IRegionManager _regionManager;
 
@@ -113,6 +116,16 @@ namespace TrilliaAccountBook.ViewModels
             get { return _price; }
             set { SetProperty(ref _price, value); }
         }
+        public int Rate
+        {
+            get { return _rate; }
+            set { SetProperty(ref _rate, value); }
+        }
+        public int BalanceAccountCode
+        {
+            get { return _balanceAccountCode; }
+            set { SetProperty(ref _balanceAccountCode, value); }
+        }
         public string ResultMessage
         {
             get { return _resultMessage; }
@@ -127,6 +140,11 @@ namespace TrilliaAccountBook.ViewModels
         {
             get { return _accounts; }
             set { SetProperty(ref _accounts, value); }
+        }
+        public int[] Rates
+        {
+            get { return _rates; }
+            set { SetProperty(ref _rates, value); }
         }
 
         private void RegisterCommandExecute()

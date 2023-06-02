@@ -37,14 +37,18 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="40"/>
                 <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition />
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="1"
                     Margin="0,0,0,2"
                     Orientation="Horizontal">
                 <TextBlock Text="Slip No"
-                       Width="100"/>
+                           VerticalAlignment="Center"
+                           Width="100"/>
                 <TextBox Text="{Binding SlipNo, StringFormat={}{0:#}}" 
                      Width="120"
                      x:Name="SlipNoTextBox">
@@ -60,7 +64,8 @@
                     Margin="0,0,0,2"
                     Orientation="Horizontal">
                 <TextBlock Text="Slip Date" 
-                       Width="100"/>
+                           VerticalAlignment="Center"
+                           Width="100"/>
                 <DatePicker SelectedDate="{Binding SlipDate}"
                         Width="120"
                         x:Name="SlipDatePicker"/>
@@ -69,6 +74,7 @@
                     Margin="0,0,0,2"
                     Orientation="Horizontal">
                 <TextBlock Text="Description" 
+                           VerticalAlignment="Center"
                            Width="100"/>
                 <TextBox Text="{Binding Description}"
                          Width="120" 
@@ -78,7 +84,8 @@
                     Margin="0,0,0,2"
                     Orientation="Horizontal">
                 <TextBlock Text="Debit" 
-                       Width="100"/>
+                           VerticalAlignment="Center"
+                           Width="100"/>
                 <ComboBox Width="120"
                       SelectedValuePath="SelectedValue"
                       DisplayMemberPath="DisplayMember"
@@ -89,7 +96,8 @@
                     Margin="0,0,0,2"
                     Orientation="Horizontal">
                 <TextBlock Text="Credit" 
-                       Width="100"/>
+                           VerticalAlignment="Center"
+                           Width="100"/>
                 <ComboBox Width="120"
                       SelectedValuePath="SelectedValue"
                       DisplayMemberPath="DisplayMember"
@@ -97,14 +105,37 @@
                       SelectedValue="{Binding CreditAccountCode}"/>
             </StackPanel>
             <StackPanel Grid.Row="6"
-                    Margin="0,0,0,2"
-                    Orientation="Horizontal">
+                        Margin="0,0,0,2"
+                        Orientation="Horizontal">
                 <TextBlock Text="Price" 
-                       Width="100"/>
+                           VerticalAlignment="Center"
+                           Width="100"/>
                 <TextBox Text="{Binding Price, StringFormat={}{0:N0}}"
                      Width="120"/>
             </StackPanel>
+            <StackPanel Grid.Row="7"
+                        Margin="0,0,0,2"
+                        Orientation="Horizontal">
+                <TextBlock Text="Rate" 
+                           VerticalAlignment="Center"
+                           Width="100"/>
+                <ComboBox Width="120"
+                      ItemsSource="{Binding Rates}" 
+                      SelectedValue="{Binding Rate}"/>
+            </StackPanel>
             <StackPanel Grid.Row="8"
+                        Margin="0,0,0,2"
+                        Orientation="Horizontal">
+                <TextBlock Text="Balance" 
+                           VerticalAlignment="Center"
+                           Width="100"/>
+                <ComboBox Width="120"
+                          SelectedValuePath="SelectedValue"
+                          DisplayMemberPath="DisplayMember"
+                          ItemsSource="{Binding Accounts}" 
+                          SelectedValue="{Binding BalanceAccountCode}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="11"
                     Margin="0,0,0,2"
                     Orientation="Horizontal"
                     HorizontalAlignment="Left">
