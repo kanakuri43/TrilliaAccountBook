@@ -135,5 +135,10 @@
     </PackageReference>
     <PackageReference Include="Prism.Unity" Version="8.0.0.1909" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="DatabaseConnection.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

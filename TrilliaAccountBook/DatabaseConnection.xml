@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<qqcsSettings>
+  <ConnectString>
+		Data Source=172.16.6.11\SQLEXPRESS;Initial Catalog=trillia_account_book;User ID=sa;Password=Sapassword1
+	</ConnectString>
+</qqcsSettings>
