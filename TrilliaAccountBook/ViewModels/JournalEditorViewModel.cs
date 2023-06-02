@@ -172,6 +172,30 @@ namespace TrilliaAccountBook.ViewModels
                     ResultMessage = @"伝票番号：" + command.Parameters["ReturnValue"].Value.ToString() + @"で登録しました。";
 
                 }
+                if (Rate != 100)
+                {
+                    // 按分するとき
+                    using (SqlCommand command = new SqlCommand("usp_register_account_journal", dc.Connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@arg_slip_no", SlipNo);
+                        command.Parameters.AddWithValue("@arg_slip_date", SlipDate);
+                        command.Parameters.AddWithValue("@arg_description", Description);
+                        command.Parameters.AddWithValue("@arg_debit_account_code", BalanceAccountCode);
+                        command.Parameters.AddWithValue("@arg_credit_account_code", DebitAccountCode);
+                        command.Parameters.AddWithValue("@arg_price", Price - (Price * (Rate / 100.0)));
+
+                        command.Parameters.Add("ReturnValue", SqlDbType.Int);
+                        command.Parameters["ReturnValue"].Direction = ParameterDirection.ReturnValue;
+
+                        command.ExecuteNonQuery();
+                        ResultMessage = @"伝票番号：" + command.Parameters["ReturnValue"].Value.ToString() + @"で登録しました。";
+
+                    }
+
+
+                }
+
             }
             else
             {
