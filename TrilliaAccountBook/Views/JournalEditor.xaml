@@ -78,7 +78,15 @@
                            Width="100"/>
                 <TextBox Text="{Binding Description}"
                          Width="120" 
-                         MaxLength="100"/>
+                         x:Name="DescriptionTextBox"
+                         MaxLength="100">
+                    <TextBox.InputBindings>
+                        <KeyBinding Gesture="Enter" 
+                                Command="{Binding DescriptionCommand}" 
+                                CommandParameter="{Binding ElementName=DescriptionTextBox}"/>
+                    </TextBox.InputBindings>
+
+                </TextBox>
             </StackPanel>
             <StackPanel Grid.Row="4"
                     Margin="0,0,0,2"

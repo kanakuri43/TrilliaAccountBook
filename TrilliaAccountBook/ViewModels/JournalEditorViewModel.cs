@@ -39,6 +39,7 @@ namespace TrilliaAccountBook.ViewModels
             DeleteCommand = new DelegateCommand(DeleteCommandExecute);
             CancelCommand = new DelegateCommand(CancelCommandExecute);
             SlipSearchCommand = new DelegateCommand<TextBox>(SlipSearchCommandExecute);
+            DescriptionCommand = new DelegateCommand<TextBox>(DescriptionCommandExecute);
 
             dc = new DatabaseController();
             dc.SQL = "SELECT "
@@ -73,6 +74,7 @@ namespace TrilliaAccountBook.ViewModels
         public DelegateCommand DeleteCommand { get; }
         public DelegateCommand CancelCommand { get; }
         public DelegateCommand<TextBox> SlipSearchCommand { get; }
+        public DelegateCommand<TextBox> DescriptionCommand { get; }
 
 
 
@@ -267,6 +269,33 @@ namespace TrilliaAccountBook.ViewModels
                 CallSlip(int.Parse(slipNoTextBox.Text));
             }
         }
+
+        private void DescriptionCommandExecute(TextBox descriptionTextBoxTextBox)
+        {
+            if (descriptionTextBoxTextBox.Text == "")
+            {
+
+            }
+            else
+            {
+                switch (descriptionTextBoxTextBox.Text)
+                {
+                    case "ガソリン代":
+                        DebitAccountCode = 8320;
+                        CreditAccountCode = 7140;
+                        Rate = 30;
+                        BalanceAccountCode = 1300;
+
+                        break;
+
+                    default:
+                        break;
+
+                }
+
+            }
+        }
+
         private void CallSlip(int slipNo)
         {
 
